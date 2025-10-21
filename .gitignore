@@ -1,0 +1,76 @@
+# IDEs
+/.idea/
+/.vscode/
+.vs/
+*.code-workspace
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# CLion/CMake build folders
+/CMake/
+/build/
+/cmake-build-*/
+*/CMakeFiles/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/CTestTestfile.cmake
+/Testing/
+/install_manifest.txt
+/Makefile
+/compile_commands.json
+
+# Generated build artifacts
+*.o
+*.obj
+*.lo
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.app
+*.pdb
+
+# Visual Studio specific
+*.vcxproj.user
+*.vcxproj.filters
+*.vcxproj.*
+*.VC.db
+*.VC.opendb
+*.ncb
+*.sdf
+*.opensdf
+
+# Temporary / backup files
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+*.log
+*.bak
+*.orig
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Coverage, profiling, tooling
+coverage/
+*.gcno
+*.gcda
+*.gcov
+lcov-report/
+
+# Misc
+core
+dist/
+pkg/
+cmake_install.cmake
+CTestTestfile.cmake
