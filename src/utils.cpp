@@ -116,9 +116,9 @@ void generate_random_data(const int n_samples,
                           const int n_features,
                           vector<vector<double>>& X,
                           vector<int>& y,
-                          const double noise) {
+                          const double noise, const int random_state) {
     random_device rd;
-    mt19937 gen(rd());
+    mt19937 gen(random_state);  // fixed seed
     normal_distribution<double> dist_x(0.0, 1.0);   // Input data
     uniform_real_distribution<double> dist_w(-1.0, 1.0); // Hidden weights
     normal_distribution<double> dist_n(0.0, noise); // Gaussian noise

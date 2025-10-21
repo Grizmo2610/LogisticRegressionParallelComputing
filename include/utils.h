@@ -56,7 +56,7 @@ vector<vector<double> > read_csv(const string &filename);
 void generate_random_data(int n_samples, int n_features,
                           vector<vector<double> > &X,
                           vector<int> &y,
-                          double noise = 0.2);
+                          double noise = 0.2, int random_state = 42);
 
 
 void train_test_split(const vector<vector<double>>& X,
