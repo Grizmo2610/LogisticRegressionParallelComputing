@@ -17,10 +17,10 @@ int main(int argc, char* argv[]) {
 
     vector<vector<double>> X;
     vector<int> y;
-    auto start = high_resolution_clock::now();
+    const auto start = high_resolution_clock::now();
     generate_random_data(n_samples, n_features, X, y, noise);
-    auto stop = high_resolution_clock::now();
-    auto duration_gen = duration_cast<milliseconds>(stop - start).count();
+    const auto stop = high_resolution_clock::now();
+    const auto duration_gen = duration_cast<milliseconds>(stop - start).count();
     cout << "Generating time: " << duration_gen << " ms" << endl;
 
     vector<vector<double>> X_train, X_test;
@@ -34,27 +34,21 @@ int main(int argc, char* argv[]) {
     auto t1 = high_resolution_clock::now();
     const vector<double> weights = model.fit(X_train, y_train, 1e-3, 1e-6, 30);
     auto t2 = high_resolution_clock::now();
-    auto duration_train = duration_cast<milliseconds>(t2 - t1).count();
+    const auto duration_train = duration_cast<milliseconds>(t2 - t1).count();
     cout << "Training time: " << duration_train << " ms" << endl;
-
-    cout << "Weights: ";
-    for (double w : weights) {
-        cout << w << " ";
-    }
-    cout << endl;
 
     cout << "=====METRICS=====" << endl;
     // measure prediction time on train set
     t1 = high_resolution_clock::now();
     const vector<int> y_train_predict = model.predict(X_train);
     t2 = high_resolution_clock::now();
-    auto duration_predict_train = duration_cast<milliseconds>(t2 - t1).count();
+    const auto duration_predict_train = duration_cast<milliseconds>(t2 - t1).count();
 
     // measure prediction time on test set
     t1 = high_resolution_clock::now();
     const vector<int> y_test_predict = model.predict(X_test);
     t2 = high_resolution_clock::now();
-    auto duration_predict_test = duration_cast<milliseconds>(t2 - t1).count();
+    const auto duration_predict_test = duration_cast<milliseconds>(t2 - t1).count();
 
     cout << "Prediction time (train set): " << duration_predict_train << " ms" << endl;
     cout << "Prediction time (test set): " << duration_predict_test << " ms" << endl;

@@ -16,12 +16,6 @@ LogisticRegression::LogisticRegression(const int core) {
     }
 }
 
-LogisticRegression::LogisticRegression(const bool parallel) {
-    this->core = 1;
-    this->parallel = parallel;
-}
-
-
 vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
                                        const vector<int>& y,
                                        const double lr,
@@ -49,7 +43,7 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
 
         #pragma omp parallel num_threads(core)
         {
-            int tid = omp_get_thread_num();
+            const int tid = omp_get_thread_num();
 
             #pragma omp for schedule(dynamic)
             for (int i = 0; i < N; i++){

@@ -13,7 +13,6 @@ private:
 
 public:
     LogisticRegression();
-    explicit LogisticRegression(bool parallel);
     explicit LogisticRegression(int core);
 
     vector<double> fit(const vector<vector<double>>& X,
