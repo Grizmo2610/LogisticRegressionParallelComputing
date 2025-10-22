@@ -9,9 +9,11 @@ private:
     vector<double> weights;
     double bias{};
     int core{};
+    bool parallel{};
 
 public:
     LogisticRegression();
+    explicit LogisticRegression(bool parallel);
     explicit LogisticRegression(int core);
 
     vector<double> fit(const vector<vector<double>>& X,

@@ -6,8 +6,21 @@ using namespace std;
 
 LogisticRegression::LogisticRegression() = default;
 
-LogisticRegression::LogisticRegression(const int core) : core(core) {
+LogisticRegression::LogisticRegression(const int core) {
+    if (core < 1) {
+        this->core = 1;
+        this->parallel = false;
+    }else {
+        this->core = core;
+        this->parallel = true;
+    }
 }
+
+LogisticRegression::LogisticRegression(const bool parallel) {
+    this->core = 1;
+    this->parallel = parallel;
+}
+
 
 vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
                                        const vector<int>& y,
@@ -20,7 +33,7 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
     vector<double> w(d, 1.0);
     this->bias = 0.0;
 
-    vector<double> X_flat = flatten(X);
+    const vector<double> X_flat = flatten(X);
 
     // Thread-local vectors for safe parallel reduction
     vector<vector<double>> local_grad_w_threads(core, vector<double>(d, 0.0));
@@ -43,7 +56,7 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
                 double z = 0.0;
 
                 // vectorization
-                #pragma omp simd reduction(+:z)
+                #pragma omp simd reduction(+:z) if(parallel)
                 for (int j = 0; j < d; j++) {
                     z += X_flat[i * d + j] * w[j];
                 }
@@ -54,7 +67,7 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
                 const double error = pred - y[i];
 
                 // vectorization
-                #pragma omp simd
+                #pragma omp simd if(parallel)
                 for (int j = 0; j < d; j++) {
                     local_grad_w_threads[tid][j] += error * X_flat[i * d + j];
                 }
@@ -64,7 +77,7 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
 
         // Combine thread-local results into global grad_w and grad_b
         for (int t = 0; t < core; t++) {
-            #pragma omp simd
+            #pragma omp simd if(parallel)
             for (int j = 0; j < d; j++) {
                 grad_w[j] += local_grad_w_threads[t][j];
                 grad_b += local_grad_b_threads[t];
@@ -72,7 +85,7 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
         }
 
         // Update weights vectorization
-        #pragma omp simd
+        #pragma omp simd if(parallel)
         for (int j = 0; j < d; ++j) {
             w[j] -= lr * grad_w[j] / N;
         }
@@ -101,7 +114,7 @@ vector<int> LogisticRegression::predict(const vector<vector<double> > &X, const 
     for (int i = 0; i < N; ++i) {
         double z = 0.0;
 
-        #pragma omp simd
+        #pragma omp simd if(parallel)
         for (int j = 0; j < this->weights.size(); ++j) {
             z += X_flat[i * X[0].size() + j]* this->weights[j];
         }

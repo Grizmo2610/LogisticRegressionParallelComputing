@@ -11,7 +11,7 @@ Yêu cầu
 
 Cấu trúc dự án
 - [CMakeLists.txt](CMakeLists.txt) — cấu hình CMake; bật C++17 và thêm flag `-O2 -fopenmp`.
-- [doc.md](doc.md) — link tới các tài liệu tham khảo/giải thích (tài liệu ngoại vi).
+- [documents.md](documents.md) — link tới các tài liệu tham khảo/giải thích (tài liệu ngoại vi).
 - include/
   - [include/model.h](include/model.h)
   - [include/utils.h](include/utils.h)
@@ -31,3 +31,4 @@ Hướng dẫn build & chạy
    mkdir -p build
    cd build
    cmake ..
+   ```
