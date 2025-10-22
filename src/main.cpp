@@ -64,6 +64,5 @@ int main(int argc, char* argv[]) {
 
     cout << "Test set Accuracy: " << accuracy_score(y_test, y_test_predict) << endl;
     cout << "Test set F1 score: " << f1_score(y_test, y_test_predict) << endl;
-
     return 0;
 }

@@ -25,30 +25,36 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
         double grad_b = 0.0;
 
         // Thread-local vectors for safe parallel reduction
-#pragma omp parallel num_threads(core)
+        #pragma omp parallel num_threads(core)
         {
             vector<double> local_grad_w(d, 0.0);
             double local_grad_b = 0.0;
 
-#pragma omp for
-            for (int i = 0; i < N; ++i)
-            {
+            #pragma omp for
+            for (int i = 0; i < N; i++){
                 double z = 0.0;
-                for (int j = 0; j < d; ++j)
+
+                // vectorization
+                #pragma omp simd
+                for (int j = 0; j < d; j++) {
                     z += X[i][j] * w[j];
+                }
+
                 z += this->bias;
 
-                double pred = sigmoid(z);
-                double error = pred - y[i];
+                const double pred = sigmoid(z);
+                const double error = pred - y[i];
 
-                for (int j = 0; j < d; ++j) {
+                // vectorization
+                #pragma omp simd
+                for (int j = 0; j < d; j++) {
                     local_grad_w[j] += error * X[i][j];
                 }
                 local_grad_b += error;
             }
 
             // Combine thread-local results into global grad_w and grad_b
-#pragma omp critical
+            #pragma omp critical
             {
                 for (int j = 0; j < d; ++j)
                     grad_w[j] += local_grad_w[j];
@@ -56,17 +62,16 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
             }
         } // end parallel
 
-        // Update weights
+        // Update weights vectorization
+        #pragma omp simd
         for (int j = 0; j < d; ++j) {
             w[j] -= lr * grad_w[j] / N;
         }
         this->bias -= lr * grad_b / N;
 
         // Check convergence
-        if (!this->weights.empty())
-        {
-            if (norm(this->weights, w, core) <= epsilon)
-            {
+        if (!this->weights.empty()) {
+            if (norm(this->weights, w, core) <= epsilon){
                 break;
             }
         }
@@ -84,6 +89,8 @@ vector<int> LogisticRegression::predict(const vector<vector<double> > &X, const 
     #pragma omp parallel for num_threads(core)
     for (int i = 0; i < N; ++i) {
         double z = 0.0;
+
+        #pragma omp simd
         for (int j = 0; j < this->weights.size(); ++j) {
             z += X[i][j] * this->weights[j];
         }
