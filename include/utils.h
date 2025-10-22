@@ -69,4 +69,5 @@ void train_test_split(const vector<vector<double>>& X,
                       bool shuffle = true,
                       unsigned int random_state = 42);
 
+vector<double> flatten(const vector<vector<double>>& X);
 #endif

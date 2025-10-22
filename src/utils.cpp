@@ -191,3 +191,14 @@ void train_test_split(const vector<vector<double>>& X,
         y_test[i] = y[indices[n_train + i]];
     }
 }
+
+
+vector<double> flatten(const vector<vector<double>>& X) {
+    vector<double>result(X.size() * X[0].size(), 0.0);
+    for (int i = 0; i < X.size(); i++) {
+        for (int j = 0; j < X[0].size(); j++) {
+            result[i * X[0].size() + j] = X[i][j];
+        }
+    }
+    return result;
+}
