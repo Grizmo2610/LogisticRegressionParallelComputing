@@ -2,7 +2,11 @@
 #include "utils.h"
 #include <omp.h>
 
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
 using namespace std;
+namespace py = pybind11;
 
 LogisticRegression::LogisticRegression() = default;
 
@@ -118,4 +122,12 @@ vector<int> LogisticRegression::predict(const vector<vector<double> > &X, const 
         y[i] = (pred > thresh) ? 1 : 0;
     }
     return y;
+}
+
+
+PYBIND11_MODULE(Logistic, m) {
+    py::class_<LogisticRegression>(m, "LogisticRegression")
+        .def(py::init<int>())
+        .def("fit", &LogisticRegression::fit)
+        .def("predict", &LogisticRegression::predict);
 }

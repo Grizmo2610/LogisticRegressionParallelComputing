@@ -74,3 +74,5 @@ dist/
 pkg/
 cmake_install.cmake
 CTestTestfile.cmake
+
+data/
