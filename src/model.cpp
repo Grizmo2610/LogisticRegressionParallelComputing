@@ -28,7 +28,10 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
     const int N = static_cast<int>(X.size());
     const int d = static_cast<int>(X[0].size());
 
-    vector<double> w(d, 1.0);
+    vector<double> w(d);
+    for (auto& wi : w) {
+        wi = ((double)rand() / RAND_MAX - 0.5) * 0.01;
+    }
     this->bias = 0.0;
 
     const vector<double> X_flat = flatten(X);
@@ -44,6 +47,10 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
 
         fill(grad_w.begin(), grad_w.end(), 0.0);
         grad_b = 0.0;
+        for (int t = 0; t < core; t++) {
+            fill(local_grad_w_threads[t].begin(), local_grad_w_threads[t].end(), 0.0);
+            local_grad_b_threads[t] = 0.0;
+        }
 
         #pragma omp parallel num_threads(core)
         {
@@ -78,8 +85,8 @@ vector<double> LogisticRegression::fit(const vector<vector<double>>& X,
             #pragma omp simd if(parallel)
             for (int j = 0; j < d; j++) {
                 grad_w[j] += local_grad_w_threads[t][j];
-                grad_b += local_grad_b_threads[t];
             }
+            grad_b += local_grad_b_threads[t];
         }
 
         // Update weights vectorization
@@ -123,7 +130,6 @@ vector<int> LogisticRegression::predict(const vector<vector<double> > &X, const 
     }
     return y;
 }
-
 
 PYBIND11_MODULE(Logistic, m) {
     py::class_<LogisticRegression>(m, "LogisticRegression")
