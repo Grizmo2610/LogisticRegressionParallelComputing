@@ -76,6 +76,7 @@ cmake_install.cmake
 CTestTestfile.cmake
 
 data/
+test.ipynb
 
 # Python bytecode
 __pycache__/

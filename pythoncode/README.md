@@ -1,4 +1,4 @@
-# **HƯỚNG DẪN CHẠY INFERENCE TREEN PYTHON**
+# **HƯỚNG DẪN CHẠY INFERENCE TRÊN PYTHON**
 
 ## Hệ điều hành
 
