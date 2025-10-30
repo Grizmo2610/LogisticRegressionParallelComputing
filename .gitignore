@@ -1,15 +1,26 @@
-# IDEs
+# IDEs / Editors
 /.idea/
 /.vscode/
-.vs/
+/.vs/
 *.code-workspace
 *.sln
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
+*.vcxproj.user
+*.vcxproj.filters
+*.vcxproj.*
+*.VC.db
+*.VC.opendb
+*.ncb
+*.sdf
+*.opensdf
+.spyderproject
+.spyproject
+.ropeproject
 
-# CLion/CMake build folders
+# CLion / CMake build folders
 /CMake/
 /build/
 /cmake-build-*/
@@ -19,11 +30,11 @@
 /cmake_install.cmake
 /CTestTestfile.cmake
 /Testing/
-/install_manifest.txt
-/Makefile
-/compile_commands.json
+install_manifest.txt
+Makefile
+compile_commands.json
 
-# Generated build artifacts
+# Generated build artifacts / binaries
 *.o
 *.obj
 *.lo
@@ -37,16 +48,6 @@
 *.app
 *.pdb
 
-# Visual Studio specific
-*.vcxproj.user
-*.vcxproj.filters
-*.vcxproj.*
-*.VC.db
-*.VC.opendb
-*.ncb
-*.sdf
-*.opensdf
-
 # Temporary / backup files
 *~
 *.swp
@@ -57,7 +58,7 @@
 *.bak
 *.orig
 
-# macOS / Windows
+# macOS / Windows system files
 .DS_Store
 Thumbs.db
 
@@ -67,25 +68,21 @@ coverage/
 *.gcda
 *.gcov
 lcov-report/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
 
-# Misc
-core
-dist/
-pkg/
-cmake_install.cmake
-CTestTestfile.cmake
-
-data/
-build-window/
-test.ipynb
-pybind11/
-
-# Python bytecode
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Virtual environments
 .env
 .venv
 env/
@@ -93,8 +90,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-# Distribution / packaging
 build/
 develop-eggs/
 dist/
@@ -114,29 +109,9 @@ var/
 *.manifest
 *.spec
 
-# Unit test / coverage
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
 # Jupyter Notebook
 .ipynb_checkpoints
-
-# Logs
-*.log
-
-# IDEs / Editors
-.spyderproject
-.spyproject
-.ropeproject
+test.ipynb
 
 # Data / temporary
 *.npy
@@ -146,3 +121,6 @@ coverage.xml
 *.pkl
 *.joblib
 *.sqlite3
+data/
+build-window/
+pybind11/

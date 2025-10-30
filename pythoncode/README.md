@@ -9,7 +9,12 @@ Model C++ được tối ưu cho Linux. Nên chạy trên Linux hoặc môi trư
 ### Windows (Tùy chọn)
 
 Có thể build trực tiếp sang `.pyd` bằng MinGW-w64.
-Tải MinGW-w64 tại [https://www.mingw-w64.org/downloads/](https://www.mingw-w64.org/downloads/)
+Tải MinGW-w64 từ [https://winlibs.com/#download-release](https://winlibs.com/#download-release).
+
+Tìm mục **MSVCRT runtime**, kéo xuống phía dưới và tải phiên bản mới nhất hoặc phiên bản [15.2](https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-13.0.0-msvcrt-r2/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r2.zip).
+
+Giải nén vào `C:\mingw64` và thêm thư mục `bin` vào `PATH` (ví dụ: `C:\mingw64\bin`).
+
 Cấu hình khi cài:
 
 ```
@@ -17,8 +22,6 @@ Architecture: x86_64
 Threads: posix
 Exception: seh
 ```
-
-Thêm `C:\mingw64\bin` vào `PATH`.
 
 ## 2. Cấu hình Python
 
@@ -45,7 +48,7 @@ cmake ..
 make
 ```
 
-File tạo ra: `Logistic.cpython-310-x86_64-linux-gnu.so`
+File tạo ra: `Logistic.cpython-xx-x86_64-linux-gnu.so`  *(xx thay thế phiên bản Python hiện tại, ví dụ 311 cho Python 3.11)*
 Copy vào cùng thư mục Python code.
 
 ### Windows (MinGW)
@@ -53,12 +56,19 @@ Copy vào cùng thư mục Python code.
 ```bash
 mkdir build
 cd build
-cmake -G "MinGW Makefiles" ..
+
+# Chạy CMake trên Windows với MinGW và đường dẫn tới pybind11
+cmake -G "MinGW Makefiles" -Dpybind11_DIR="C:/Users/Hoang Tu/AppData/Local/Programs/Python/Pythonxx/Lib/site-packages/pybind11/share/cmake/pybind11" ..
+
+# Biên dịch module
 cmake --build .
 ```
 
-File tạo ra: `Logistic.cp311-win_amd64.pyd`
-Copy vào cùng thư mục Python code.
+* Thay `Hoang Tu` bằng tên user Windows của bạn.
+* Thay `Pythonxx` bằng phiên bản Python đang dùng (xx).
+
+Kết quả: `Logistic.cp**xx**-win_amd64.pyd`
+Copy vào cùng thư mục Python code để import.
 
 ## 4. Import module trong Python
 
