@@ -1,3 +1,11 @@
+import os
+import platform
+
+if platform.system().lower() == "windows":
+    # Add MinGW bin directory to DLL search path on Windows
+    # Change the path below if MinGW is installed in a different location
+    os.add_dll_directory(r"C:\mingw64\bin")
+
 import Logistic
 
 class LogisticRegressionParallel:
