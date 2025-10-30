@@ -101,3 +101,33 @@ model = Logistic.LogisticRegression(core)
 ```
 
 Module Python sử dụng trực tiếp, lõi xử lý bằng C++ cho hiệu năng cao.
+
+## 6. Sử dụng trực tiếp model mà không cần biên dịch
+
+Nếu đã có sẵn file `.so` (Linux) hoặc `.pyd` (Windows), có thể bỏ qua bước biên dịch và dùng trực tiếp thông qua một file `model.py` khởi tạo sẵn model.
+
+**Lưu ý:** Trên Windows, việc cài đặt **MinGW-w64** là bắt buộc để có thể chạy module `.pyd` đúng cách (xem **phần 1 – Windows**).
+
+**model.py**
+
+```python
+import os
+import platform
+
+if platform.system().lower() == "windows":
+    os.add_dll_directory(r"C:\mingw64\bin")  # Tham khảo phần 1 – Windows
+
+import Logistic
+
+# Khởi tạo model
+model = Logistic.LogisticRegression(core)
+```
+
+Sau đó chỉ cần import `model` trong các file Python khác:
+
+```python
+from model import model
+
+# Sử dụng model
+predictions = model.predict(data)
+```
