@@ -131,9 +131,3 @@ vector<int> LogisticRegression::predict(const vector<vector<double> > &X, const 
     return y;
 }
 
-PYBIND11_MODULE(Logistic, m) {
-    py::class_<LogisticRegression>(m, "LogisticRegression")
-        .def(py::init<int>())
-        .def("fit", &LogisticRegression::fit)
-        .def("predict", &LogisticRegression::predict);
-}

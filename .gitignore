@@ -76,7 +76,9 @@ cmake_install.cmake
 CTestTestfile.cmake
 
 data/
+build-window/
 test.ipynb
+pybind11/
 
 # Python bytecode
 __pycache__/

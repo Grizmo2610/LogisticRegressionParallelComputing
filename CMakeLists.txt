@@ -6,7 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -fopenmp")
 include_directories(include)
 
 # Find pybind11 for Python module build
-find_package(pybind11 REQUIRED)
+find_package(pybind11 CONFIG REQUIRED)
 
 file(GLOB SOURCES "src/*.cpp")
 
