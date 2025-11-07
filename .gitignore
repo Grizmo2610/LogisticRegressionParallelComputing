@@ -122,5 +122,6 @@ test.ipynb
 *.joblib
 *.sqlite3
 data/
+runs/
 build-window/
 pybind11/
