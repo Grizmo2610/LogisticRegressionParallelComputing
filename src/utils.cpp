@@ -202,3 +202,35 @@ vector<double> flatten(const vector<vector<double>>& X) {
     }
     return result;
 }
+
+// =======================
+// Helper: compute logistic loss with L2 regularization
+// =======================
+double logistic_loss(
+    const vector<double>& w,
+    double bias,
+    const vector<double>& X_flat,
+    const vector<int>& y,
+    int N,
+    int d,
+    double lambda_l2
+) {
+    double total_loss = 0.0;
+
+    for (int i = 0; i < N; ++i) {
+        double z = bias;
+        for (int j = 0; j < d; ++j) {
+            z += X_flat[i * d + j] * w[j];
+        }
+        double p = 1.0 / (1.0 + exp(-z));
+        total_loss += -(y[i] * log(p + 1e-12) + (1 - y[i]) * log(1 - p + 1e-12));
+    }
+
+    // L2 regularization term
+    double reg = 0.0;
+    for (double wi : w) {
+        reg += wi * wi;
+    }
+
+    return (total_loss / N) + lambda_l2 * reg;
+}

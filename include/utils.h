@@ -70,4 +70,14 @@ void train_test_split(const vector<vector<double>>& X,
                       unsigned int random_state = 42);
 
 vector<double> flatten(const vector<vector<double>>& X);
+
+double logistic_loss(
+    const vector<double>& w,
+    double bias,
+    const vector<double>& X_flat,
+    const vector<int>& y,
+    int N,
+    int d,
+    double lambda_l2
+);
 #endif

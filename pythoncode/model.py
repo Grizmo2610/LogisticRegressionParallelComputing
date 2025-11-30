@@ -30,7 +30,7 @@ class LogisticRegressionParallel:
         self.model = Logistic.LogisticRegression(core)
         self.weights = []
 
-    def fit(self, X, y, lr: float = 1e-2, epsilon: float = 1e-6, maxtier: int = 30) -> list[float]:
+    def fit(self, X, y, lr: float = 1e-2, epsilon: float = 1e-6, maxtier: int = 500) -> list[float]:
         """
         Train the logistic regression model.
 

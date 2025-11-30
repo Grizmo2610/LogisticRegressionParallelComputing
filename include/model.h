@@ -19,7 +19,8 @@ public:
                        const vector<int>& y,
                        double lr,
                        double epsilon,
-                       int max_iter);
+                       int max_iter,
+                       double lambda_l2);
 
     [[nodiscard]] vector<int> predict(const vector<vector<double>>& X,
                         double thresh = 0.5) const;
